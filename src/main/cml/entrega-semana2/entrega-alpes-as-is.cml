@@ -1,0 +1,127 @@
+/* The DDD Cargo sample application modeled in CML. Note that we split the application into multiple bounded contexts. */
+ContextMap EntregaAlpesAsIsMap {
+  	type = SYSTEM_LANDSCAPE
+  	state = AS_IS	
+
+	contains OrdenCompraContext
+	contains AbastecimientoContext
+	contains AdquisicionesContext
+	contains RecibimientoContext
+	contains DevolucionesContext
+	contains BalanceContext
+	contains AlmacenamientoContext
+	contains RevisionExistenciasContext
+	contains AdmBodegasCentrosContext
+	contains ProveedoresContext
+	contains EmpaquetadoContext
+	contains DespachoInventarioContext
+	contains IntegracionLogisticaContext
+	contains PlanificacionPedidosContext
+	contains DespachoPedidosContext
+	contains RastreoContext
+	contains AdmUltimaMillaContext
+	contains IntegracionCouriersContext
+	contains HojaRutaContext
+	contains EntregaContext
+ 
+	OrdenCompraContext [U]->[D] AbastecimientoContext
+	AbastecimientoContext [U]->[D] AdquisicionesContext
+	RecibimientoContext [D]<-[U] AdquisicionesContext
+	RecibimientoContext [P]<->[P] BalanceContext
+	DevolucionesContext [P]<->[P] BalanceContext
+	RecibimientoContext [U]->[D] AlmacenamientoContext	
+	AbastecimientoContext [P]<->[P] RevisionExistenciasContext
+	AdmBodegasCentrosContext [P]<->[P] AlmacenamientoContext
+	RecibimientoContext [D]<-[U] ProveedoresContext
+	ProveedoresContext [P]<->[P] AdquisicionesContext
+	EmpaquetadoContext [P]<->[P] RevisionExistenciasContext
+	EmpaquetadoContext [D]<-[U] DespachoInventarioContext
+	EmpaquetadoContext [P]<->[P] PlanificacionPedidosContext
+	DespachoPedidosContext [P]<->[P] PlanificacionPedidosContext
+	DespachoPedidosContext [P]<->[P] IntegracionLogisticaContext
+	DespachoPedidosContext [P]<->[P] RastreoContext
+	DespachoPedidosContext [P]<->[P] AdmUltimaMillaContext
+	IntegracionCouriersContext [P]<->[P] AdmUltimaMillaContext
+	HojaRutaContext [P]<->[P] AdmUltimaMillaContext
+	HojaRutaContext [U]->[D] EntregaContext
+}
+
+BoundedContext OrdenCompraContext {
+  domainVisionStatement "OrdenCompra Context is responsible for providing information about intems in purchase order and that needs to be delivery to the shipping address prvided by the client "
+}
+
+BoundedContext AbastecimientoContext {
+  domainVisionStatement "Abastecimiento Context is responsible for requesting items purchased by the client at warehouse or distribution centers "
+}
+
+BoundedContext AdquisicionesContext {
+  domainVisionStatement "Adquisiciones Context is responsible for requesting new items from suppliers when there is not stock in warehouse "
+}
+
+BoundedContext RecibimientoContext {
+  domainVisionStatement "Adquisiciones Context is responsible for receiving new items from suppliers when requested for having stock "
+}
+
+BoundedContext BalanceContext {
+  domainVisionStatement "Balance Context is responsible for updating the amount of items according with the supply and demand "
+}
+
+BoundedContext AlmacenamientoContext {
+  domainVisionStatement "Almacenamiento Context is responsible for storing items at warehouse when received from suppliers "
+}
+
+BoundedContext RevisionExistenciasContext {
+  domainVisionStatement "RevisionExistencias Context is responsible for validating availability of items purchased by the client at warehouse or distribution centers "
+}
+
+BoundedContext AdmBodegasCentrosContext {
+  domainVisionStatement "AdmBodegasCentros Context is responsible for managing the operation of warehouses or distribution centers "
+}
+
+BoundedContext DevolucionesContext {
+  domainVisionStatement "Devoluciones Context is responsible for receiving items when returned from clients "
+}
+
+BoundedContext ProveedoresContext {
+  domainVisionStatement "Proveedores Context is responsible for managing integration with the suppliers "
+}
+
+BoundedContext EmpaquetadoContext {
+  domainVisionStatement "Empaquetado Context is responsible for puttinng items in package before shipping "
+}
+
+BoundedContext DespachoInventarioContext {
+  domainVisionStatement "DespachoInventario Context is responsible for allocating packages with logistics for shipping "
+}
+
+BoundedContext IntegracionLogisticaContext {
+  domainVisionStatement "IntegracionLogistica Context is responsible for managing integration with the suppliers "
+}
+
+BoundedContext PlanificacionPedidosContext {
+  domainVisionStatement "PlanificacionPedidos Context is responsible for creating delivery plan for packages that will be transported "
+}
+
+BoundedContext DespachoPedidosContext {
+  domainVisionStatement "DespachoPedidos Context is responsible for allocating the packages with transportation according with plan "
+}
+
+BoundedContext RastreoContext {
+  domainVisionStatement "Rastreo Context is responsible for inform in real time about location of packages while is being transported "
+}
+
+BoundedContext AdmUltimaMillaContext {
+  domainVisionStatement "AdmUltimaMilla Context is responsible for managing transportation in last mile "
+}
+
+BoundedContext IntegracionCouriersContext {
+  domainVisionStatement "IntegracionCouriers Context is responsible for managing integration with couriers in last mile "
+}
+
+BoundedContext HojaRutaContext {
+  domainVisionStatement "HojaRuta Context is responsible for managing all the events during delivery of items to the client "
+}
+
+BoundedContext EntregaContext {
+  domainVisionStatement "Entrega Context is responsible for updating the order as completed when all items has been delivery "
+}
