@@ -25,25 +25,27 @@ ContextMap EntregaAlpesAsIsMap {
 	contains EntregaContext
  
 	OrdenCompraContext [U]->[D] AbastecimientoContext
-	AbastecimientoContext [U]->[D] AdquisicionesContext
+	RevisionExistenciasContext [P]<->[P] AdquisicionesContext
 	RecibimientoContext [D]<-[U] AdquisicionesContext
 	RecibimientoContext [P]<->[P] BalanceContext
-	DevolucionesContext [P]<->[P] BalanceContext
+	RevisionExistenciasContext [P]<->[P] BalanceContext
+	AlmacenamientoContext [P]<->[P] BalanceContext
+	DevolucionesContext [U]->[D] BalanceContext
 	RecibimientoContext [U]->[D] AlmacenamientoContext	
 	AbastecimientoContext [P]<->[P] RevisionExistenciasContext
 	AdmBodegasCentrosContext [P]<->[P] AlmacenamientoContext
 	RecibimientoContext [D]<-[U] ProveedoresContext
 	ProveedoresContext [P]<->[P] AdquisicionesContext
-	DespachoInventarioContext [P]<->[P] RevisionExistenciasContext
-	DespachoInventarioContext [D]<-[U] OrdenCompraContext
+	DespachoInventarioContext [D]<-[U] RevisionExistenciasContext
+	PlanificacionPedidosContext [D]<-[U] OrdenCompraContext
 	EmpaquetadoContext [D]<-[U] DespachoInventarioContext
-	EmpaquetadoContext [P]<->[P] PlanificacionPedidosContext
-	DespachoPedidosContext [P]<->[P] PlanificacionPedidosContext
-	DespachoPedidosContext [P]<->[P] IntegracionLogisticaContext
-	DespachoPedidosContext [P]<->[P] RastreoContext
+	EmpaquetadoContext [P]<->[P] IntegracionLogisticaContext
+	PlanificacionPedidosContext [D]<-[U] IntegracionLogisticaContext
+	DespachoPedidosContext [D]<-[U] PlanificacionPedidosContext
+	AdmUltimaMillaContext [P]<->[P] RastreoContext
 	DespachoPedidosContext [P]<->[P] AdmUltimaMillaContext
-	IntegracionCouriersContext [P]<->[P] AdmUltimaMillaContext
-	HojaRutaContext [P]<->[P] AdmUltimaMillaContext
+	AdmUltimaMillaContext [P]<->[P] IntegracionCouriersContext
+	HojaRutaContext [D]<-[U] AdmUltimaMillaContext
 	HojaRutaContext [U]->[D] EntregaContext
 }
 
