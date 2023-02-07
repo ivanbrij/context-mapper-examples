@@ -34,7 +34,8 @@ ContextMap EntregaAlpesAsIsMap {
 	AdmBodegasCentrosContext [P]<->[P] AlmacenamientoContext
 	RecibimientoContext [D]<-[U] ProveedoresContext
 	ProveedoresContext [P]<->[P] AdquisicionesContext
-	EmpaquetadoContext [P]<->[P] RevisionExistenciasContext
+	DespachoInventarioContext [P]<->[P] RevisionExistenciasContext
+	DespachoInventarioContext [D]<-[U] OrdenCompraContext
 	EmpaquetadoContext [D]<-[U] DespachoInventarioContext
 	EmpaquetadoContext [P]<->[P] PlanificacionPedidosContext
 	DespachoPedidosContext [P]<->[P] PlanificacionPedidosContext
