@@ -1,7 +1,7 @@
 /* The DDD Cargo sample application modeled in CML. Note that we split the application into multiple bounded contexts. */
 ContextMap EntregaAlpesAsIsMap {
   	type = SYSTEM_LANDSCAPE
-  	state = AS_IS	
+  	state = TO_BE	
 
 	contains OrdenCompraContext
 	contains AbastecimientoContext
@@ -23,12 +23,13 @@ ContextMap EntregaAlpesAsIsMap {
 	contains IntegracionCouriersContext
 	contains HojaRutaContext
 	contains EntregaContext
+	contains IntegracionBodegasContext
  
 	/* We identified a customer-supplier relationship between these contexts, the downstream can be adapted by the upstream */
 	OrdenCompraContext [U]->[D] AbastecimientoContext
 
-	/* We identified a shared kernel between these contexts, because have high coupling as EDA monolite */
-	RevisionExistenciasContext [SK]<->[SK] AdquisicionesContext
+	/* We identified a partnership between these contexts, because both are coordinated */
+	RevisionExistenciasContext [P]<->[P] AdquisicionesContext
 
 	/* We identified a customer-supplier relationship between these contexts, the downstream can be adapted by the upstream */
 	RecibimientoContext [D]<-[U] AdquisicionesContext
@@ -39,8 +40,8 @@ ContextMap EntregaAlpesAsIsMap {
 	/* We identified a partnership between these contexts, because both are coordinated */
 	RevisionExistenciasContext [P]<->[P] BalanceContext
 
-	/* We identified a partnership between these contexts, because have high coupling as EDA monolite */
-	AlmacenamientoContext [SK]<->[SK] BalanceContext
+	/* We identified a partnership between these contexts, because both are coordinated */
+	AlmacenamientoContext [P]<->[P] BalanceContext
 
 	/* We identified a customer-supplier relationship between these contexts, the downstream can be adapted by the upstream */
 	DevolucionesContext [U]->[D] BalanceContext
@@ -51,8 +52,11 @@ ContextMap EntregaAlpesAsIsMap {
 	/* We identified a partnership between these contexts, because both are coordinated */
 	AbastecimientoContext [P]<->[P] RevisionExistenciasContext
 
-	/* We identified a partnership between these contexts, because have high coupling as EDA monolite */
-	AdmBodegasCentrosContext [SK]<->[SK] AlmacenamientoContext
+	/* We identified a partnership between these contexts, because both are coordinated */
+	AdmBodegasCentrosContext [P]<->[P] AlmacenamientoContext
+
+	/* We identified a partnership between these contexts, because both are coordinated */
+	AlmacenamientoContext [P]<->[P] IntegracionBodegasContext
 
 	/* We identified a customer-supplier relationship between these contexts, the downstream can be adapted by the upstream */
 	RecibimientoContext [D]<-[U] ProveedoresContext
@@ -172,4 +176,8 @@ BoundedContext HojaRutaContext {
 
 BoundedContext EntregaContext {
   domainVisionStatement "Entrega Context is responsible for updating the order as completed when all items has been delivery "
+}
+
+BoundedContext IntegracionBodegasContext {
+  domainVisionStatement "IntegracionBodegas Context is responsible for integration with third party warehouse providers "
 }
